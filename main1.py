@@ -1,6 +1,11 @@
 int main(){
-int a;
-int b;
-scanf(a, b);
-write((a+b), ' ', (a-b), ' ', (a*b), ' ', (a / b), ' ', (a % b));
+float a;
+float b;
+scanf("%f",&a);
+scanf("%f",&b);
+printf("%.2f",(a+b));
+printf(" ");
+printf("%.2f",(a-b));
+printf(" ");
+printf("%.2f",(a/b));
 }

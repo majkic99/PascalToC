@@ -115,7 +115,7 @@ class Lexer:
         while self.pos + 1 < self.len and self.text[self.pos + 1].isdigit():
             lexeme += self.next_char()
 
-        print(lexeme)
+
 
         return float(lexeme)
 
@@ -639,8 +639,10 @@ class Parser:
                     self.eat(Class.OF)
                     tip = self.type_()
                     elems = None
+
                     if self.curr.class_ == Class.SEMICOLON:
-                        vars.append(ArrayDecl(tip, Id(lista[0]), low, high, elems))
+                        for x in lista:
+                            vars.append(ArrayDecl(tip, Id(x), low, high, elems))
                         self.eat(Class.SEMICOLON)
                     elif (self.curr.class_ == Class.EQSIGN):
                         self.eat(Class.EQSIGN)
@@ -1177,6 +1179,7 @@ class Grapher(Visitor):
         self.visit(node, node.args)
 
     def visit_Block(self, parent, node):
+
         self.add_node(parent, node)
         for n in node.nodes:
             self.visit(node, n)
@@ -1348,17 +1351,21 @@ class Symbolizer(Visitor):
         pass
 
     def visit_If(self, parent, node):
+        node.symbols = parent.symbols
         self.visit(node, node.true)
         if node.false is not None:
             self.visit(node, node.false)
 
     def visit_While(self, parent, node):
+        node.symbols = parent.symbols
         self.visit(node, node.block)
 
     def visit_For(self, parent, node):
+        node.symbols = parent.symbols
         self.visit(node, node.block)
 
     def visit_RepeatUntil(self, parent, node):
+        node.symbols = parent.symbols
         self.visit(node, node.block)
 
     def visit_FuncImpl(self, parent, node):
@@ -1381,7 +1388,7 @@ class Symbolizer(Visitor):
         pass
 
     def visit_Block(self, parent, node):
-        node.symbols = Symbols()
+        node.symbols = parent.symbols
         for n in node.nodes:
             self.visit(parent, n)
 
@@ -1453,14 +1460,21 @@ class Symbolizer(Visitor):
     def symbolize(self):
         self.visit(None, self.ast)
 
+
 class Generator(Visitor):
     def __init__(self, ast):
         self.ast = ast
         self.py = ""
         self.level = 0
 
+
+
     def append(self, text):
         self.py += str(text)
+
+
+    def addtoStart(self,text):
+        self.py = text + '\n' + self.py
 
     def newline(self):
         self.append('\n')
@@ -1490,16 +1504,20 @@ class Generator(Visitor):
     def visit_Decl(self, parent, node):
         self.visit(node, node.type_)
         self.visit(node, node.id_)
+        if(isinstance(node.type_, TypeString)):
+            self.append('[100] = {0}')
+
 
 
     def visit_ArrayDecl(self, parent, node):
         self.visit(node, node.type_)
+
+        self.visit(node, node.id_)
         self.append('[')
         self.visit(node, node.high)
-        self.append( '-' )
+        self.append('-')
         self.visit(node, node.low)
-        self.append('] ')
-        self.visit(node, node.id_)
+        self.append('+1] ')
         if node.elems is not None:
             self.append(' = {')
             self.visit(node, node.elems)
@@ -1509,7 +1527,7 @@ class Generator(Visitor):
         self.visit(node,node.id_)
         self.append('[')
         self.visit(node, node.index)
-        self.append(']')
+        self.append('-1]')
 
     def visit_Assign(self, parent, node):
         self.visit(node, node.id_)
@@ -1553,7 +1571,7 @@ class Generator(Visitor):
         if (node.where.value == 'to'):
             value = node.init.id_.value
             self.append(value)
-            self.append('<')
+            self.append('<=')
             self.visit(node, node.cond)
             self.append(';')
             self.append(value)
@@ -1563,7 +1581,7 @@ class Generator(Visitor):
         else:
             value = node.init.id_.value
             self.append(value)
-            self.append('>')
+            self.append('>=')
             self.visit(node, node.cond)
             self.append(';')
             self.append(value)
@@ -1581,29 +1599,45 @@ class Generator(Visitor):
         self.append('}')
         self.newline()
         self.append('while (')
-        self.visit(node, node.cond)
+        if (isinstance(node.cond, BoolValue)):
+            self.append(1)
+        else:
+            self.visit(node, node.cond)
         self.append(')')
         self.newline()
 
     def visit_FuncImpl(self, parent, node):
+        self.newline()
         self.visit(node, node.type_)
         self.append(' ')
         self.visit(node,node.id_)
         self.append('(')
         self.visit(node,node.params)
-        self.append('){')
+        self.append(')')
+        x = self.py.split('\n')
+
+        self.addtoStart(x[-1] + ';')
+        self.append('{')
         self.newline()
         self.visit(node, node.var)
         self.visit(node, node.block)
         self.newline()
         self.append('}')
 
+
+
     def visit_ProcImpl(self, parent, node):
-        self.append('void' + '')
+        self.newline()
+        self.append('void' + ' ' )
         self.visit(node,node.id_)
         self.append('(')
         self.visit(node, node.params)
-        self.append('){')
+        self.append(')')
+        x = self.py.split('\n')
+
+        self.addtoStart(x[-1] + ';\n' )
+        self.append('{')
+
         self.newline()
         self.visit(node,node.var)
         self.visit(node,node.block)
@@ -1611,10 +1645,133 @@ class Generator(Visitor):
         self.append('}')
 
     def visit_FuncProcCall(self, parent, node):
-        self.visit(node, node.id_)
-        self.append('(')
-        self.visit(node, node.args)
-        self.append(')')
+        if node.id_.value == ('inc'):
+            self.visit(node, node.args)
+            self.append('++')
+        elif node.id_.value == ('length'):
+            self.append('strlen(')
+            self.visit(node, node.args)
+            self.append(')')
+        elif node.id_.value == ('ord'):
+            self.visit(node, node.args)
+        elif node.id_.value == ('insert'):
+            for i, n in enumerate(node.args.args):
+                if i == 1:
+                    self.visit(node, n)
+            self.append('[')
+            for i, n in enumerate(node.args.args):
+                if i == 2:
+                    self.visit(node, n)
+            self.append('-1] = ')
+            for i, n in enumerate(node.args.args):
+                if i == 0:
+                    self.visit(node, n)
+        elif node.id_.value == ('chr'):
+            self.visit(node, node.args)
+        elif node.id_.value == ('readln') or node.id_.value == ('read'):
+            for i, n in enumerate(node.args.args):
+                self.append('scanf(')
+                if (isinstance(n,ArrayElem)):
+                    type = parent.symbols.get(n.id_.value).type_
+
+                    if (type == 'integer array'):
+                        self.append('"%d",&')
+                        self.visit(node,n)
+                    if (type == 'char array'):
+                        self.append('"%c",&')
+                        self.visit(node,n)
+                    if (type == 'real array'):
+                        self.append('"%f",&')
+                        self.visit(node,n)
+                    self.append(')')
+                    if (i < len(node.args.args) - 1):
+                        self.append(';')
+                        self.newline()
+                else:
+
+                    type = parent.symbols.get(n.value).type_
+
+                    if (type == 'integer'):
+                        self.append('"%d",&')
+                        self.append(n.value)
+                    if (type == 'char'):
+                        self.append('"%c",&')
+                        self.append(n.value)
+                    if (type == 'real'):
+                        self.append('"%f",&')
+                        self.append(n.value)
+                    if (type == 'string'):
+                        self.append('"%s",')
+                        self.append(n.value)
+                    self.append(')')
+                    if (i < len(node.args.args)-1):
+                        self.append(';')
+                        self.newline()
+        elif node.id_.value == ('write') or node.id_.value == ('writeln'):
+            for i, n in enumerate(node.args.args):
+                self.append('printf(')
+                if (isinstance(n,BinOp)):
+                    self.append('"%d",')
+                    self.visit(node, n)
+                elif (isinstance(n,Char)):
+                    self.append('"')
+                    self.append(n.value)
+                    self.append('"')
+                elif (isinstance(n,Id)):
+                    type = parent.symbols.get(n.value).type_
+
+                    if (type == 'integer'):
+                        self.append('"%d",')
+                        self.append(n.value)
+                    if (type == 'char'):
+                        self.append('"%c",')
+                        self.append(n.value)
+                    if (type == 'real'):
+                        self.append('"%f",')
+                        self.append(n.value)
+                    if (type == 'string'):
+                        self.append('"%s",')
+                        self.append(n.value)
+                elif (isinstance(n,Int)):
+                    self.append('"%d",')
+                    self.append(n.value)
+                elif (isinstance(n,ArrayElem)):
+                    self.append('"%d",')
+                    self.visit(node,n)
+                elif (isinstance(n,Real)):
+                    self.append('"%f",')
+                    self.append(n.value)
+                elif (isinstance(n,String)):
+                    self.append('"')
+                    self.append(n.value)
+                    self.append('"')
+                elif (isinstance(n,FormattedArg)):
+                    self.visit(node, n)
+                elif (isinstance(n,FuncProcCall)):
+                    if (n.id_.value == 'chr' or n.id_.value == 'ord'):
+                        self.append('"%c",')
+                    else:
+                        type = parent.symbols.get(n.id_.value).type_
+                        if type == 'integer':
+                            self.append('"%d",')
+                        elif type == 'real':
+                            self.append('"%f",')
+                        else:
+                            self.append('"%c",')
+                    self.visit(node,n)
+
+                self.append(')')
+                if (i < len(node.args.args)-1) or (len(node.args.args)==1 and node.id_.value == ('writeln')):
+                    self.append(';')
+                    self.newline()
+
+            if node.id_.value == ('writeln'):
+                self.append('printf("\\n")')
+        else:
+            self.visit(node, node.id_)
+            self.append('(')
+            self.visit(node, node.args)
+            self.append(')')
 
     def visit_Block(self, parent, node):
 
@@ -1624,7 +1781,8 @@ class Generator(Visitor):
                 pass
             elif isinstance(n, For):
                 pass
-
+            elif isinstance(n, While):
+                pass
             else:
                 self.append(';')
             self.newline()
@@ -1669,11 +1827,11 @@ class Generator(Visitor):
             self.append(')')
 
     def visit_TypeString(self, parent, node):
-        self.append('char[] ')
+        self.append('char ')
 
     def visit_Type(self, parent, node):
         if node.value == 'real' :
-            self.append('double ')
+            self.append('float ')
         if node.value == 'integer':
             self.append('int ')
         if node.value == 'boolean':
@@ -1716,6 +1874,8 @@ class Generator(Visitor):
             self.append('/')
         elif node.symbol == 'and':
             self.append(' && ')
+        elif node.symbol == '=':
+            self.append(' == ')
         elif node.symbol == 'or':
             self.append(' || ')
         elif node.symbol == '<>':
@@ -1742,7 +1902,10 @@ class Generator(Visitor):
             self.append('0')
 
     def visit_FormattedArg(self, parent, node):
-        pass
+        self.append('"%.')
+        self.visit(node, node.right)
+        self.append('f",')
+        self.visit(node, node.args)
 
     def generate(self, path):
         self.visit(None, self.ast)
@@ -1757,7 +1920,7 @@ DEBUG = True  # OBAVEZNO: Postaviti na False pre slanja projekta
 
 if DEBUG:
 
-    test_id = '15'  # Redni broj test primera [01-15]
+    test_id = '01'  # Redni broj test primera [01-15]
     path_root = 'Druga faza/'
     args = {}
     args['src'] = f'{path_root}{test_id}/src.pas'  # Izvorna PAS datoteka
@@ -1780,13 +1943,13 @@ with open(args['src'], 'r') as source:
     ast = parser.parse()
     # symbolizer = Symbolizer(ast)
     # symbolizer.symbolize()
-    print(ast)
+    #print(ast)
     grapher = Grapher(ast)
     img = grapher.graph()
     Image(img)
     symbolizer = Symbolizer(ast)
     symbolizer.symbolize()
-    print(ast)
+    #print(ast)
     generator = Generator(ast)
     code = generator.generate('main1.py')
 
