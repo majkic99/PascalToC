@@ -1864,7 +1864,7 @@ class Generator(Visitor):
         self.append(node.value)
 
     def visit_BinOp(self, parent, node):
-        self.append('(')
+
         self.visit(node, node.first)
         if node.symbol == 'mod':
             self.append(' % ')
@@ -1883,7 +1883,7 @@ class Generator(Visitor):
         else:
             self.append(node.symbol)
         self.visit(node, node.second)
-        self.append(')')
+
 
     def visit_UnOp(self, parent, node):
         if node.symbol == '-':
@@ -1937,24 +1937,16 @@ with open(args['src'], 'r') as source:
     text = source.read()
     lexer = Lexer(text)
     tokens = lexer.lex()
-    # for t in tokens:
-    # print(t)
     parser = Parser(tokens)
     ast = parser.parse()
-    # symbolizer = Symbolizer(ast)
-    # symbolizer.symbolize()
-    #print(ast)
-    grapher = Grapher(ast)
-    img = grapher.graph()
-    Image(img)
+    #grapher = Grapher(ast)
+    #img = grapher.graph()
+    #Image(img)
     symbolizer = Symbolizer(ast)
     symbolizer.symbolize()
-    #print(ast)
     generator = Generator(ast)
-    code = generator.generate('main1.py')
-
-# generator = Generator(ast)
-# generator.generate(args['gen'])
+    # code = generator.generate('main1.py')
+    generator.generate(args['gen'])
 # runner = Runner(ast)
 # runner.run()
 
