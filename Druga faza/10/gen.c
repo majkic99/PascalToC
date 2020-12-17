@@ -1,23 +1,26 @@
-int main() {
-	int niz[100];
-	int i, j, n;
-	scanf("%d", &n);
-	for(i = 1; i <= n; i = i + 1) {
-		scanf("%d", &niz[i]);
-	}
-	for(i = 1; i <= n; i = i + 1) {
-		for(j = i + 1; j <= n; j = j + 1) {
-			if(niz[i] <= niz[j]) {
-				continue;
-			} else {
-				int temp = niz[i];
-				niz[i] = niz[j];
-				niz[j] = temp;
-			}
-		}
-	}
-	for(i = 1; i <= n; i = i + 1) {
-		printf("%d ", niz[i]);
-	}
-	return 0;
+int main(){
+int niz[100-1+1] ;
+int i;
+int j;
+int n;
+int temp;
+scanf("%d",&n);
+for (i = 1;i<=n;i++){
+scanf("%d",&niz[i-1]);
+}
+for (i = 1;i<=n;i++){
+for (j = i+1;j<=n;j++){
+if (niz[i-1]<=niz[j-1]){
+continue;
+}else{
+temp = niz[i-1];
+niz[i-1] = niz[j-1];
+niz[j-1] = temp;
+}
+}
+}
+for (i = 1;i<=n;i++){
+printf("%d",niz[i-1]);
+printf(" ");
+}
 }

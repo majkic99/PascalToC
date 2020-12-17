@@ -1,12 +1,15 @@
-int pow_rek(int a, int b) {
-	if(b == 0) {
-		return 1;
-	}
-	return a * pow_rek(a, b - 1);
+int  pow_rek(int a, int b);
+int main(){
+int a;
+int b;
+scanf("%d",&a);
+scanf("%d",&b);
+printf("%d",pow_rek(a, b));
+printf("\n");
 }
-int main() {
-	int a, b;
-	scanf("%d%d", &a, &b);
-	printf("%d\n", pow_rek(a, b));
-	return 0;
+int  pow_rek(int a, int b){
+if (b == 0){
+return(1);
+}
+return(a*pow_rek(a, b-1));
 }
