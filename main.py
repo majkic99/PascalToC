@@ -2074,6 +2074,9 @@ class Runner(Visitor):
                 elif (isinstance(args[i], BinOp)):
                     value = self.visit(node.args,args[i])
                     string +=  str(value)
+                if (isinstance(args[i], FuncProcCall)):
+                    value = self.visit(node.args, args[i])
+                    string += str(value)
 
 
             print(string)
@@ -2084,7 +2087,12 @@ class Runner(Visitor):
                 id_ = self.visit(node.args, args[i])
                 id_.value = inputs[i]
 
-
+        elif func == 'chr' :
+            value = self.visit(node, args[0])
+            return chr(value)
+        elif func == 'ord' :
+            value = self.visit(node, args[0])
+            return ord(value.value)
         elif func == 'strlen':
             a = args[0]
             if isinstance(a, String):
@@ -2321,7 +2329,7 @@ DEBUG = False  # OBAVEZNO: Postaviti na False pre slanja projekta
 
 if DEBUG:
 
-    test_id = '02'  # Redni broj test primera [01-15]
+    test_id = '03'  # Redni broj test primera [01-15]
     path_root = 'Druga faza/'
     args = {}
     args['src'] = f'{path_root}{test_id}/src.pas'  # Izvorna PAS datoteka
@@ -2340,7 +2348,7 @@ with open(args['src'], 'r') as source:
     tokens = lexer.lex()
     parser = Parser(tokens)
     ast = parser.parse()
-   #grapher = Grapher(ast)
+    #grapher = Grapher(ast)
     #img = grapher.graph()
     #Image(img)
     symbolizer = Symbolizer(ast)
