@@ -1,6 +1,10 @@
 #!/bin/bash
-wd=$(pwd) && cd $(dirname ${BASH_SOURCE[0]})
-for i in `find . ! -path . -type d | sort`; do
+wd=$(pwd) && cd "$1"
+for i in `find . -type d | sort`; do
+	dir=${i:2}
+	if [[ $dir == *\.* ]] || [ ${#dir} == 0 ]; then
+		continue
+	fi
     rm -f "$i/gen" && ok=true
     for j in {1..5}; do
         t="$i/$j" && out=$(<"$t.out")

@@ -355,6 +355,8 @@ class ArrayDecl(Node):
         self.low = low
         self.high = high
         self.elems = elems
+        self.size = high.value -low.value +1
+
 
 
 class ArrayElem(Node):
@@ -736,9 +738,25 @@ class Parser:
         false = None
         if self.curr.class_ == Class.ELSE:
             self.eat(Class.ELSE)
-            self.eat(Class.BEGIN)
-            false = self.block()
-            self.eat(Class.END)
+            if (self.curr.class_ == Class.IF):
+                self.eat(Class.IF)
+                cond2 = self.logic()
+                self.eat(Class.THEN)
+                self.eat(Class.BEGIN)
+                block2 = self.block()
+                self.eat(Class.END)
+                self.eat(Class.ELSE)
+                self.eat(Class.IF)
+                cond3 = self.logic()
+                self.eat(Class.THEN)
+                self.eat(Class.BEGIN)
+                block3 = self.block()
+                self.eat(Class.END)
+
+            else:
+                self.eat(Class.BEGIN)
+                false = self.block()
+                self.eat(Class.END)
         self.eat(Class.SEMICOLON)
         return If(cond, true, false)
 
@@ -1301,6 +1319,11 @@ class Symbols:
         self.symbols[id_] = Symbol(id_, type_, scope)
 
     def get(self, id_):
+        if self.symbols.get(id_) == None:
+            print('Greska: Koriscenje nedeklarisane promenljive')
+
+            import sys
+            sys.exit()
         return self.symbols[id_]
 
     def contains(self, id_):
@@ -1467,6 +1490,7 @@ class Generator(Visitor):
 
     def append(self, text):
         self.py += str(text)
+
 
     def addtoStart(self, text):
         self.py = text + '\n' + self.py
@@ -1658,7 +1682,7 @@ class Generator(Visitor):
             for i, n in enumerate(node.args.args):
                 self.append('scanf(')
                 if (isinstance(n, ArrayElem)):
-                    type = parent.symbols.get(n.id_.value).type_
+                    type = self.ast.symbols.get(n.id_.value).type_
 
                     if (type == 'integer array'):
                         self.append('"%d",&')
@@ -1675,7 +1699,7 @@ class Generator(Visitor):
                         self.newline()
                 else:
 
-                    type = parent.symbols.get(n.value).type_
+                    type = self.ast.symbols.get(n.value).type_
 
                     if (type == 'integer'):
                         self.append('"%d",&')
@@ -1704,7 +1728,7 @@ class Generator(Visitor):
                     self.append(n.value)
                     self.append('"')
                 elif (isinstance(n, Id)):
-                    type = parent.symbols.get(n.value).type_
+                    type = self.ast.symbols.get(n.value).type_
 
                     if (type == 'integer'):
                         self.append('"%d",')
@@ -1960,7 +1984,7 @@ class Runner(Visitor):
         if elems is not None:
             self.visit(node, elems)
         elif size is not None:
-            for i in range(size.value):
+            for i in range(size):
                 id_.symbols.put(i, id_.type_, None)
                 id_.symbols.get(i).value = None
 
@@ -2349,11 +2373,11 @@ class Runner(Visitor):
         self.visit(None, self.ast)
 
 
-DEBUG = True  # OBAVEZNO: Postaviti na False pre slanja projekta
+DEBUG = False  # OBAVEZNO: Postaviti na False pre slanja projekta
 
 if DEBUG:
 
-    test_id = '09'  # Redni broj test primera [01-15]
+    test_id = '11'  # Redni broj test primera [01-15]
     path_root = 'Druga faza/'
     args = {}
     args['src'] = f'{path_root}{test_id}/src.pas'  # Izvorna PAS datoteka
@@ -2379,7 +2403,7 @@ with open(args['src'], 'r') as source:
     symbolizer = Symbolizer(ast)
     symbolizer.symbolize()
     generator = Generator(ast)
-    # code = generator.generate('main1.py')
+    #code = generator.generate('main1.py')
     generator.generate(args['gen'])
     runner = Runner(ast)
     runner.run()

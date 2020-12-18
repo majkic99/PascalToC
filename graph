@@ -8,186 +8,260 @@ digraph {
 	node2 -> node3
 	node4 [label="Type : integer"]
 	node3 -> node4
-	node5 [label="Id : niz"]
+	node5 [label="Id : a"]
 	node3 -> node5
 	node6 [label="Int : 1"]
 	node3 -> node6
 	node7 [label="Int : 100"]
 	node3 -> node7
-	node8 [label=Decl]
+	node8 [label=ArrayDecl]
 	node2 -> node8
 	node9 [label="Type : integer"]
 	node8 -> node9
-	node10 [label="Id : i"]
+	node10 [label="Id : b"]
 	node8 -> node10
-	node11 [label=Decl]
-	node2 -> node11
-	node12 [label="Type : integer"]
-	node11 -> node12
-	node13 [label="Id : j"]
-	node11 -> node13
-	node14 [label=Decl]
-	node2 -> node14
-	node15 [label="Type : integer"]
-	node14 -> node15
-	node16 [label="Id : n"]
-	node14 -> node16
-	node17 [label=Decl]
-	node2 -> node17
-	node18 [label="Type : integer"]
-	node17 -> node18
-	node19 [label="Id : temp"]
-	node17 -> node19
-	node20 [label=Block]
-	node1 -> node20
-	node21 [label=FuncProcCall]
-	node20 -> node21
-	node22 [label="Id : readln"]
+	node11 [label="Int : 1"]
+	node8 -> node11
+	node12 [label="Int : 100"]
+	node8 -> node12
+	node13 [label=ArrayDecl]
+	node2 -> node13
+	node14 [label="Type : integer"]
+	node13 -> node14
+	node15 [label="Id : c"]
+	node13 -> node15
+	node16 [label="Int : 1"]
+	node13 -> node16
+	node17 [label="Int : 100"]
+	node13 -> node17
+	node18 [label=Decl]
+	node2 -> node18
+	node19 [label="Type : integer"]
+	node18 -> node19
+	node20 [label="Id : n"]
+	node18 -> node20
+	node21 [label=Decl]
+	node2 -> node21
+	node22 [label="Type : integer"]
 	node21 -> node22
-	node23 [label=Args]
+	node23 [label="Id : ai"]
 	node21 -> node23
-	node24 [label="Id : n"]
-	node23 -> node24
-	node25 [label=For]
-	node20 -> node25
-	node26 [label=Assign]
-	node25 -> node26
-	node27 [label="Id : i"]
-	node26 -> node27
-	node28 [label="Int : 1"]
-	node26 -> node28
-	node29 [label="Id : n"]
-	node25 -> node29
-	node30 [label=Block]
-	node25 -> node30
-	node31 [label=FuncProcCall]
+	node24 [label=Decl]
+	node2 -> node24
+	node25 [label="Type : integer"]
+	node24 -> node25
+	node26 [label="Id : bi"]
+	node24 -> node26
+	node27 [label=Decl]
+	node2 -> node27
+	node28 [label="Type : integer"]
+	node27 -> node28
+	node29 [label="Id : ci"]
+	node27 -> node29
+	node30 [label=Decl]
+	node2 -> node30
+	node31 [label="Type : integer"]
 	node30 -> node31
-	node32 [label="Id : read"]
-	node31 -> node32
-	node33 [label=Args]
-	node31 -> node33
-	node34 [label=ArrayElem]
+	node32 [label="Id : i"]
+	node30 -> node32
+	node33 [label=Block]
+	node1 -> node33
+	node34 [label=Assign]
 	node33 -> node34
-	node35 [label="Id : niz"]
+	node35 [label="Id : bi"]
 	node34 -> node35
-	node36 [label="Id : i"]
+	node36 [label="Int : 1"]
 	node34 -> node36
-	node37 [label="Where : to"]
-	node25 -> node37
-	node38 [label=For]
-	node20 -> node38
-	node39 [label=Assign]
-	node38 -> node39
-	node40 [label="Id : i"]
-	node39 -> node40
-	node41 [label="Int : 1"]
-	node39 -> node41
-	node42 [label="Id : n"]
-	node38 -> node42
-	node43 [label=Block]
-	node38 -> node43
+	node37 [label=Assign]
+	node33 -> node37
+	node38 [label="Id : ci"]
+	node37 -> node38
+	node39 [label="Int : 1"]
+	node37 -> node39
+	node40 [label=FuncProcCall]
+	node33 -> node40
+	node41 [label="Id : readln"]
+	node40 -> node41
+	node42 [label=Args]
+	node40 -> node42
+	node43 [label="Id : n"]
+	node42 -> node43
 	node44 [label=For]
-	node43 -> node44
+	node33 -> node44
 	node45 [label=Assign]
 	node44 -> node45
-	node46 [label="Id : j"]
+	node46 [label="Id : ai"]
 	node45 -> node46
-	node47 [label="BinOp : +"]
+	node47 [label="Int : 1"]
 	node45 -> node47
-	node48 [label="Id : i"]
-	node47 -> node48
-	node49 [label="Int : 1"]
-	node47 -> node49
-	node50 [label="Id : n"]
-	node44 -> node50
-	node51 [label=Block]
-	node44 -> node51
-	node52 [label=If]
-	node51 -> node52
-	node53 [label="BinOp : <="]
+	node48 [label="Id : n"]
+	node44 -> node48
+	node49 [label=Block]
+	node44 -> node49
+	node50 [label=FuncProcCall]
+	node49 -> node50
+	node51 [label="Id : read"]
+	node50 -> node51
+	node52 [label=Args]
+	node50 -> node52
+	node53 [label=ArrayElem]
 	node52 -> node53
-	node54 [label=ArrayElem]
+	node54 [label="Id : a"]
 	node53 -> node54
-	node55 [label="Id : niz"]
-	node54 -> node55
-	node56 [label="Id : i"]
-	node54 -> node56
-	node57 [label=ArrayElem]
-	node53 -> node57
-	node58 [label="Id : niz"]
+	node55 [label="Id : ai"]
+	node53 -> node55
+	node56 [label="Where : to"]
+	node44 -> node56
+	node57 [label=For]
+	node33 -> node57
+	node58 [label=Assign]
 	node57 -> node58
-	node59 [label="Id : j"]
-	node57 -> node59
-	node60 [label=Block]
-	node52 -> node60
-	node61 [label=Continue]
-	node60 -> node61
+	node59 [label="Id : ai"]
+	node58 -> node59
+	node60 [label="Int : 1"]
+	node58 -> node60
+	node61 [label="Id : n"]
+	node57 -> node61
 	node62 [label=Block]
-	node52 -> node62
-	node63 [label=Assign]
+	node57 -> node62
+	node63 [label=If]
 	node62 -> node63
-	node64 [label="Id : temp"]
+	node64 [label="BinOp : ="]
 	node63 -> node64
-	node65 [label=ArrayElem]
-	node63 -> node65
-	node66 [label="Id : niz"]
+	node65 [label="BinOp : mod"]
+	node64 -> node65
+	node66 [label=ArrayElem]
 	node65 -> node66
-	node67 [label="Id : i"]
-	node65 -> node67
-	node68 [label=Assign]
-	node62 -> node68
-	node69 [label=ArrayElem]
-	node68 -> node69
-	node70 [label="Id : niz"]
-	node69 -> node70
-	node71 [label="Id : i"]
-	node69 -> node71
-	node72 [label=ArrayElem]
-	node68 -> node72
-	node73 [label="Id : niz"]
+	node67 [label="Id : a"]
+	node66 -> node67
+	node68 [label="Id : ai"]
+	node66 -> node68
+	node69 [label="Int : 2"]
+	node65 -> node69
+	node70 [label="Int : 0"]
+	node64 -> node70
+	node71 [label=Block]
+	node63 -> node71
+	node72 [label=Assign]
+	node71 -> node72
+	node73 [label=ArrayElem]
 	node72 -> node73
-	node74 [label="Id : j"]
-	node72 -> node74
-	node75 [label=Assign]
-	node62 -> node75
+	node74 [label="Id : b"]
+	node73 -> node74
+	node75 [label="Id : bi"]
+	node73 -> node75
 	node76 [label=ArrayElem]
-	node75 -> node76
-	node77 [label="Id : niz"]
+	node72 -> node76
+	node77 [label="Id : a"]
 	node76 -> node77
-	node78 [label="Id : j"]
+	node78 [label="Id : ai"]
 	node76 -> node78
-	node79 [label="Id : temp"]
-	node75 -> node79
-	node80 [label="Where : to"]
-	node44 -> node80
-	node81 [label="Where : to"]
-	node38 -> node81
-	node82 [label=For]
-	node20 -> node82
-	node83 [label=Assign]
-	node82 -> node83
-	node84 [label="Id : i"]
-	node83 -> node84
-	node85 [label="Int : 1"]
-	node83 -> node85
-	node86 [label="Id : n"]
-	node82 -> node86
-	node87 [label=Block]
-	node82 -> node87
-	node88 [label=FuncProcCall]
-	node87 -> node88
-	node89 [label="Id : write"]
-	node88 -> node89
-	node90 [label=Args]
-	node88 -> node90
-	node91 [label=ArrayElem]
-	node90 -> node91
-	node92 [label="Id : niz"]
-	node91 -> node92
-	node93 [label="Id : i"]
-	node91 -> node93
-	node94 [label="Char :  "]
-	node90 -> node94
-	node95 [label="Where : to"]
-	node82 -> node95
+	node79 [label=Assign]
+	node71 -> node79
+	node80 [label="Id : bi"]
+	node79 -> node80
+	node81 [label="BinOp : +"]
+	node79 -> node81
+	node82 [label="Id : bi"]
+	node81 -> node82
+	node83 [label="Int : 1"]
+	node81 -> node83
+	node84 [label=Block]
+	node63 -> node84
+	node85 [label=Assign]
+	node84 -> node85
+	node86 [label=ArrayElem]
+	node85 -> node86
+	node87 [label="Id : c"]
+	node86 -> node87
+	node88 [label="Id : ci"]
+	node86 -> node88
+	node89 [label=ArrayElem]
+	node85 -> node89
+	node90 [label="Id : a"]
+	node89 -> node90
+	node91 [label="Id : ai"]
+	node89 -> node91
+	node92 [label=Assign]
+	node84 -> node92
+	node93 [label="Id : ci"]
+	node92 -> node93
+	node94 [label="BinOp : +"]
+	node92 -> node94
+	node95 [label="Id : ci"]
+	node94 -> node95
+	node96 [label="Int : 1"]
+	node94 -> node96
+	node97 [label="Where : to"]
+	node57 -> node97
+	node98 [label=For]
+	node33 -> node98
+	node99 [label=Assign]
+	node98 -> node99
+	node100 [label="Id : i"]
+	node99 -> node100
+	node101 [label="Int : 1"]
+	node99 -> node101
+	node102 [label="BinOp : -"]
+	node98 -> node102
+	node103 [label="Id : bi"]
+	node102 -> node103
+	node104 [label="Int : 1"]
+	node102 -> node104
+	node105 [label=Block]
+	node98 -> node105
+	node106 [label=FuncProcCall]
+	node105 -> node106
+	node107 [label="Id : write"]
+	node106 -> node107
+	node108 [label=Args]
+	node106 -> node108
+	node109 [label=ArrayElem]
+	node108 -> node109
+	node110 [label="Id : b"]
+	node109 -> node110
+	node111 [label="Id : i"]
+	node109 -> node111
+	node112 [label="Char :  "]
+	node108 -> node112
+	node113 [label="Where : to"]
+	node98 -> node113
+	node114 [label=FuncProcCall]
+	node33 -> node114
+	node115 [label="Id : writeln"]
+	node114 -> node115
+	node116 [label=Args]
+	node114 -> node116
+	node117 [label=For]
+	node33 -> node117
+	node118 [label=Assign]
+	node117 -> node118
+	node119 [label="Id : i"]
+	node118 -> node119
+	node120 [label="Int : 1"]
+	node118 -> node120
+	node121 [label="BinOp : -"]
+	node117 -> node121
+	node122 [label="Id : ci"]
+	node121 -> node122
+	node123 [label="Int : 1"]
+	node121 -> node123
+	node124 [label=Block]
+	node117 -> node124
+	node125 [label=FuncProcCall]
+	node124 -> node125
+	node126 [label="Id : write"]
+	node125 -> node126
+	node127 [label=Args]
+	node125 -> node127
+	node128 [label=ArrayElem]
+	node127 -> node128
+	node129 [label="Id : c"]
+	node128 -> node129
+	node130 [label="Id : i"]
+	node128 -> node130
+	node131 [label="Char :  "]
+	node127 -> node131
+	node132 [label="Where : to"]
+	node117 -> node132
 }
