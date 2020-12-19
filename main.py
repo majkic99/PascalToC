@@ -1320,10 +1320,10 @@ class Symbols:
 
     def get(self, id_):
         if self.symbols.get(id_) == None:
-            print('Greska: Koriscenje nedeklarisane promenljive')
-
-            import sys
-            sys.exit()
+            #print('Greska: Koriscenje nedeklarisane promenljive')
+            pass
+            #import sys
+           # sys.exit()
         return self.symbols[id_]
 
     def contains(self, id_):
@@ -1984,7 +1984,7 @@ class Runner(Visitor):
         if elems is not None:
             self.visit(node, elems)
         elif size is not None:
-            for i in range(size):
+            for i in range(size+1):
                 id_.symbols.put(i, id_.type_, None)
                 id_.symbols.get(i).value = None
 
@@ -2043,7 +2043,14 @@ class Runner(Visitor):
         condValue = self.visit(node, node.cond)
 
         if where == 'to':
-            cond = (symbol <= condValue)
+            if hasattr(symbol, 'value') and hasattr(condValue, 'value'):
+                cond = (int(symbol.value) <= int(condValue.value))
+            elif hasattr(condValue, 'value'):
+                cond = (int(symbol) <= int(condValue.value))
+            elif hasattr(symbol, 'value'):
+                cond = (int(symbol.value) <= int(condValue))
+            else:
+                cond = (symbol <= condValue)
         else:
             cond = (int(symbol.value) >= condValue)
         while cond:
@@ -2052,11 +2059,26 @@ class Runner(Visitor):
             self.clear_scope(node.block)
 
             if where == 'to':
-                symbol.value = int(symbol.value) + 1
-                cond = (int(symbol.value) <= condValue)
+                if hasattr(symbol, 'value'):
+                    symbol.value = int(symbol.value) + 1
+                    if hasattr(symbol, 'value') and hasattr(condValue, 'value'):
+                        cond = (int(symbol.value) <= int(condValue.value))
+                    elif hasattr(condValue, 'value'):
+                        cond = (int(symbol) <= int(condValue.value))
+                    elif hasattr(symbol, 'value'):
+                        cond = (int(symbol.value) <= int(condValue))
+                    else:
+                        cond = (symbol <= condValue)
+                else:
+                    symbol = symbol + 1
+                    cond = symbol <= condValue
             else:
-                symbol.value = int(symbol.value) - 1
-                cond = (int(symbol.value) >= condValue)
+                if hasattr(symbol, 'value'):
+                    symbol.value = int(symbol.value) - 1
+                    cond = (int(symbol.value) >= condValue)
+                else:
+                    symbol = symbol - 1
+                    cond = symbol >= condValue
 
     # check
     def visit_RepeatUntil(self, parent, node):
@@ -2113,12 +2135,21 @@ class Runner(Visitor):
                 elif(isinstance(args[i], Id)):
                     id = self.visit(node.args,args[i])
                     string += str(id.value)
+                elif(isinstance(args[i], ArrayElem)):
+                    id = self.visit(node.args, args[i])
+                    string += str(id.value)
+
             if func == 'write':
                 print(string, end="")
             else:
                 print(string)
 
-        elif func == 'readln':
+        elif func == 'readln' :
+            inputs = input().split()
+            for i, m in enumerate(args):
+                id_ = self.visit(node.args, args[i])
+                id_.value = inputs[i]
+        elif func == 'read' :
             inputs = input().split()
             for i, m in enumerate(args):
                 id_ = self.visit(node.args, args[i])
@@ -2373,11 +2404,11 @@ class Runner(Visitor):
         self.visit(None, self.ast)
 
 
-DEBUG = False  # OBAVEZNO: Postaviti na False pre slanja projekta
+DEBUG = True  # OBAVEZNO: Postaviti na False pre slanja projekta
 
 if DEBUG:
 
-    test_id = '11'  # Redni broj test primera [01-15]
+    test_id = '12'  # Redni broj test primera [01-15]
     path_root = 'Druga faza/'
     args = {}
     args['src'] = f'{path_root}{test_id}/src.pas'  # Izvorna PAS datoteka
