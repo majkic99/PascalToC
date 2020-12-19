@@ -5,6 +5,8 @@ import pickle
 import re
 
 
+inputArray = []
+
 class Class(Enum):
     PLUS = auto()
     MINUS = auto()
@@ -1922,6 +1924,8 @@ class Generator(Visitor):
 
 
 class Runner(Visitor):
+
+
     def __init__(self, ast):
         self.ast = ast
         self.global_ = {}
@@ -1976,6 +1980,8 @@ class Runner(Visitor):
     def visit_Decl(self, parent, node):
         id_ = self.get_symbol(node.id_)
         id_.value = None
+        if isinstance(node.type_, TypeString):
+            id_.value = ''
 
     def visit_ArrayDecl(self, parent, node):
         id_ = self.get_symbol(node.id_)
@@ -1991,13 +1997,19 @@ class Runner(Visitor):
     def visit_ArrayElem(self, parent, node):
         id_ = self.get_symbol(node.id_)
         index = self.visit(node, node.index)
-        return id_.symbols.get(index.value)
-
+        if hasattr(index, 'value'):
+            if hasattr(id_, 'value'):
+                if (id_.type_ ==  'string'):
+                    return id_.value[index.value-1]
+            return id_.symbols.get(index.value)
+        else:
+            return id_.symbols.get(index)
     # check
     def visit_Assign(self, parent, node):
         id_ = self.visit(node, node.id_)
         value = self.visit(node, node.expr)
         if isinstance(value, Symbol):
+
             value = value.value
         id_.value = value
 
@@ -2018,7 +2030,7 @@ class Runner(Visitor):
         else:
             if cond:
                 self.init_scope(node.true)
-                self.visit(node, node.true)
+                test = self.visit(node, node.true)
                 self.clear_scope(node.true)
             else:
                 if node.false is not None:
@@ -2150,10 +2162,14 @@ class Runner(Visitor):
                 id_ = self.visit(node.args, args[i])
                 id_.value = inputs[i]
         elif func == 'read' :
-            inputs = input().split()
+
+            global inputArray
+            if not inputArray:
+                inputs = input().split()
+                inputArray = inputs
             for i, m in enumerate(args):
                 id_ = self.visit(node.args, args[i])
-                id_.value = inputs[i]
+                id_.value = inputArray.pop(0)
 
         elif func == 'chr':
             value = self.visit(node, args[0])
@@ -2191,6 +2207,23 @@ class Runner(Visitor):
                 dest.symbols.put(i, dest.type_, None)
                 dest.symbols.get(i).value = v
                 i += 1
+        elif func == 'length':
+            string = self.visit(node, args[0])
+
+            return len(string.value)
+        elif func == 'inc':
+            value = self.visit(node, args[0])
+
+            value.value = value.value +1
+        elif func == 'insert':
+            a = self.visit(node, args[0])
+            b = self.visit(node, args[1])
+            c = self.visit(node, args[2])
+            if hasattr(a, 'value'):
+                b.value = b.value[:c.value] + a.value + b.value[c.value:]
+            else:
+                b.value = b.value[:c.value] + a + b.value[c.value:]
+
         else:
             impl = self.global_[func]
             self.call_stack.append(func)
@@ -2203,7 +2236,7 @@ class Runner(Visitor):
             return result
 
     def visit_Block(self, parent, node):
-        result = None
+        self.result = None
         scope = id(node)
         self.scope.append(scope)
 
@@ -2221,11 +2254,11 @@ class Runner(Visitor):
             elif isinstance(n, Exit):
                 self.return_ = True
                 if n.value is not None:
-                    result = self.visit(n, n.value)
+                    self.result = self.visit(n, n.value)
             else:
                 self.visit(node, n)
         self.scope.pop()
-        return result
+        return self.result
 
     def visit_Params(self, parent, node):
         pass
@@ -2351,7 +2384,12 @@ class Runner(Visitor):
             elif node.symbol == 'mod':
                 return int(first) % int(second)
             elif node.symbol == '=':
-                return int(first) == int(second)
+                try:
+                    result = int(first) == int(second)
+                except:
+                    result = first == second
+                finally:
+                    return result
             elif node.symbol == '<>':
                 return first != second
             elif node.symbol == '<':
@@ -2363,9 +2401,20 @@ class Runner(Visitor):
             elif node.symbol == '>=':
                 return int(first) >= int(second)
             elif node.symbol == 'and':
-                bool_first = first != 0
-                bool_second = second != 0
-                return bool_first and bool_second
+                if isinstance(node.first, BinOp):
+                    first = self.visit(node,node.first.first)
+                    second = self.visit(node,node.first.second)
+                    third = self.visit(node,node.second)
+                    bool_first = first != 0
+                    bool_second = second != 0
+                    bool_third = third != 0
+                    return bool_first or (bool_second and bool_third)
+
+                else:
+                    bool_first = first != 0
+                    bool_second = second != 0
+                    return bool_first and bool_second
+
             elif node.symbol == 'or':
                 bool_first = first != 0
                 bool_second = second != 0
@@ -2404,11 +2453,11 @@ class Runner(Visitor):
         self.visit(None, self.ast)
 
 
-DEBUG = True  # OBAVEZNO: Postaviti na False pre slanja projekta
+DEBUG = False  # OBAVEZNO: Postaviti na False pre slanja projekta
 
 if DEBUG:
 
-    test_id = '12'  # Redni broj test primera [01-15]
+    test_id = '15'  # Redni broj test primera [01-15]
     path_root = 'Druga faza/'
     args = {}
     args['src'] = f'{path_root}{test_id}/src.pas'  # Izvorna PAS datoteka

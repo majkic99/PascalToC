@@ -2,184 +2,420 @@ digraph {
 	node [height=0.1 shape=box]
 	edge [arrowsize=0.5]
 	node1 [label=Program]
-	node2 [label=Variables]
+	node2 [label=FuncImpl]
 	node1 -> node2
-	node3 [label=ArrayDecl]
+	node3 [label="Type : char"]
 	node2 -> node3
-	node4 [label="Type : integer"]
-	node3 -> node4
-	node5 [label="Id : a"]
-	node3 -> node5
-	node6 [label="Int : 1"]
-	node3 -> node6
-	node7 [label="Int : 1005"]
-	node3 -> node7
-	node8 [label=Decl]
-	node2 -> node8
-	node9 [label="Type : integer"]
-	node8 -> node9
-	node10 [label="Id : n"]
-	node8 -> node10
-	node11 [label=Decl]
-	node2 -> node11
-	node12 [label="Type : integer"]
+	node4 [label="Id : cifra_stotina"]
+	node2 -> node4
+	node5 [label=Params]
+	node2 -> node5
+	node6 [label=Decl]
+	node5 -> node6
+	node7 [label="Type : char"]
+	node6 -> node7
+	node8 [label="Id : s"]
+	node6 -> node8
+	node9 [label=Block]
+	node2 -> node9
+	node10 [label=If]
+	node9 -> node10
+	node11 [label="BinOp : <"]
+	node10 -> node11
+	node12 [label=FuncProcCall]
 	node11 -> node12
-	node13 [label="Id : i"]
-	node11 -> node13
-	node14 [label=Decl]
-	node2 -> node14
-	node15 [label="Type : integer"]
+	node13 [label="Id : ord"]
+	node12 -> node13
+	node14 [label=Args]
+	node12 -> node14
+	node15 [label="Id : s"]
 	node14 -> node15
-	node16 [label="Id : max"]
-	node14 -> node16
-	node17 [label=Decl]
-	node2 -> node17
-	node18 [label="Type : integer"]
+	node16 [label="Int : 100"]
+	node11 -> node16
+	node17 [label=Block]
+	node10 -> node17
+	node18 [label=Exit]
 	node17 -> node18
-	node19 [label="Id : x"]
-	node17 -> node19
-	node20 [label=Decl]
-	node2 -> node20
-	node21 [label="Type : integer"]
+	node19 [label="Char : 0"]
+	node18 -> node19
+	node20 [label=Block]
+	node10 -> node20
+	node21 [label=Exit]
 	node20 -> node21
-	node22 [label="Id : br"]
-	node20 -> node22
-	node23 [label=Block]
-	node1 -> node23
-	node24 [label=For]
-	node23 -> node24
-	node25 [label=Assign]
+	node22 [label=FuncProcCall]
+	node21 -> node22
+	node23 [label="Id : chr"]
+	node22 -> node23
+	node24 [label=Args]
+	node22 -> node24
+	node25 [label="BinOp : +"]
 	node24 -> node25
-	node26 [label="Id : i"]
+	node26 [label=FuncProcCall]
 	node25 -> node26
-	node27 [label="Int : 1"]
-	node25 -> node27
-	node28 [label="Int : 3"]
-	node24 -> node28
-	node29 [label=Block]
-	node24 -> node29
-	node30 [label=Assign]
-	node29 -> node30
-	node31 [label=ArrayElem]
+	node27 [label="Id : ord"]
+	node26 -> node27
+	node28 [label=Args]
+	node26 -> node28
+	node29 [label="Char : 0"]
+	node28 -> node29
+	node30 [label="BinOp : div"]
+	node25 -> node30
+	node31 [label=FuncProcCall]
 	node30 -> node31
-	node32 [label="Id : a"]
+	node32 [label="Id : ord"]
 	node31 -> node32
-	node33 [label="Id : i"]
+	node33 [label=Args]
 	node31 -> node33
-	node34 [label="Int : 0"]
-	node30 -> node34
-	node35 [label="Where : to"]
-	node24 -> node35
-	node36 [label=FuncProcCall]
-	node23 -> node36
-	node37 [label="Id : readln"]
-	node36 -> node37
-	node38 [label=Args]
-	node36 -> node38
-	node39 [label="Id : n"]
-	node38 -> node39
-	node40 [label=For]
-	node23 -> node40
-	node41 [label=Assign]
+	node34 [label="Id : s"]
+	node33 -> node34
+	node35 [label="Int : 100"]
+	node30 -> node35
+	node36 [label=Variables]
+	node2 -> node36
+	node37 [label=FuncImpl]
+	node1 -> node37
+	node38 [label="Type : char"]
+	node37 -> node38
+	node39 [label="Id : cifra_desetica"]
+	node37 -> node39
+	node40 [label=Params]
+	node37 -> node40
+	node41 [label=Decl]
 	node40 -> node41
-	node42 [label="Id : i"]
+	node42 [label="Type : char"]
 	node41 -> node42
-	node43 [label="Int : 1"]
+	node43 [label="Id : s"]
 	node41 -> node43
-	node44 [label="Id : n"]
-	node40 -> node44
-	node45 [label=Block]
-	node40 -> node45
-	node46 [label=FuncProcCall]
+	node44 [label=Block]
+	node37 -> node44
+	node45 [label=If]
+	node44 -> node45
+	node46 [label="BinOp : <"]
 	node45 -> node46
-	node47 [label="Id : read"]
+	node47 [label=FuncProcCall]
 	node46 -> node47
-	node48 [label=Args]
-	node46 -> node48
-	node49 [label="Id : x"]
-	node48 -> node49
-	node50 [label=Assign]
-	node45 -> node50
-	node51 [label=ArrayElem]
-	node50 -> node51
-	node52 [label="Id : a"]
-	node51 -> node52
-	node53 [label="Id : x"]
-	node51 -> node53
-	node54 [label="BinOp : +"]
-	node50 -> node54
-	node55 [label=ArrayElem]
-	node54 -> node55
-	node56 [label="Id : a"]
+	node48 [label="Id : ord"]
+	node47 -> node48
+	node49 [label=Args]
+	node47 -> node49
+	node50 [label="Id : s"]
+	node49 -> node50
+	node51 [label="Int : 10"]
+	node46 -> node51
+	node52 [label=Block]
+	node45 -> node52
+	node53 [label=Exit]
+	node52 -> node53
+	node54 [label="Char : 0"]
+	node53 -> node54
+	node55 [label=Block]
+	node45 -> node55
+	node56 [label=Exit]
 	node55 -> node56
-	node57 [label="Id : x"]
-	node55 -> node57
-	node58 [label="Int : 1"]
-	node54 -> node58
-	node59 [label="Where : to"]
-	node40 -> node59
-	node60 [label=Assign]
-	node23 -> node60
-	node61 [label="Id : max"]
+	node57 [label=FuncProcCall]
+	node56 -> node57
+	node58 [label="Id : chr"]
+	node57 -> node58
+	node59 [label=Args]
+	node57 -> node59
+	node60 [label="BinOp : +"]
+	node59 -> node60
+	node61 [label=FuncProcCall]
 	node60 -> node61
-	node62 [label="UnOp : -"]
-	node60 -> node62
-	node63 [label="Int : 1"]
-	node62 -> node63
-	node64 [label=For]
-	node23 -> node64
-	node65 [label=Assign]
-	node64 -> node65
-	node66 [label="Id : i"]
+	node62 [label="Id : ord"]
+	node61 -> node62
+	node63 [label=Args]
+	node61 -> node63
+	node64 [label="Char : 0"]
+	node63 -> node64
+	node65 [label="BinOp : mod"]
+	node60 -> node65
+	node66 [label="BinOp : div"]
 	node65 -> node66
-	node67 [label="Int : 1"]
-	node65 -> node67
-	node68 [label="Int : 1005"]
-	node64 -> node68
-	node69 [label=Block]
-	node64 -> node69
-	node70 [label=If]
+	node67 [label=FuncProcCall]
+	node66 -> node67
+	node68 [label="Id : ord"]
+	node67 -> node68
+	node69 [label=Args]
+	node67 -> node69
+	node70 [label="Id : s"]
 	node69 -> node70
-	node71 [label="BinOp : <"]
-	node70 -> node71
-	node72 [label="Id : max"]
-	node71 -> node72
-	node73 [label=ArrayElem]
-	node71 -> node73
-	node74 [label="Id : a"]
-	node73 -> node74
-	node75 [label="Id : i"]
-	node73 -> node75
-	node76 [label=Block]
-	node70 -> node76
-	node77 [label=Assign]
-	node76 -> node77
-	node78 [label="Id : max"]
+	node71 [label="Int : 10"]
+	node66 -> node71
+	node72 [label="Int : 10"]
+	node65 -> node72
+	node73 [label=Variables]
+	node37 -> node73
+	node74 [label=FuncImpl]
+	node1 -> node74
+	node75 [label="Type : char"]
+	node74 -> node75
+	node76 [label="Id : cifra_jedinica"]
+	node74 -> node76
+	node77 [label=Params]
+	node74 -> node77
+	node78 [label=Decl]
 	node77 -> node78
-	node79 [label=ArrayElem]
-	node77 -> node79
-	node80 [label="Id : a"]
-	node79 -> node80
-	node81 [label="Id : i"]
-	node79 -> node81
-	node82 [label=Assign]
-	node76 -> node82
-	node83 [label="Id : br"]
+	node79 [label="Type : char"]
+	node78 -> node79
+	node80 [label="Id : s"]
+	node78 -> node80
+	node81 [label=Block]
+	node74 -> node81
+	node82 [label=Exit]
+	node81 -> node82
+	node83 [label=FuncProcCall]
 	node82 -> node83
-	node84 [label="Id : i"]
-	node82 -> node84
-	node85 [label="Where : to"]
-	node64 -> node85
-	node86 [label=FuncProcCall]
-	node23 -> node86
-	node87 [label="Id : write"]
+	node84 [label="Id : chr"]
+	node83 -> node84
+	node85 [label=Args]
+	node83 -> node85
+	node86 [label="BinOp : +"]
+	node85 -> node86
+	node87 [label=FuncProcCall]
 	node86 -> node87
-	node88 [label=Args]
-	node86 -> node88
-	node89 [label="Id : br"]
-	node88 -> node89
-	node90 [label="Char :  "]
-	node88 -> node90
-	node91 [label="Id : max"]
-	node88 -> node91
+	node88 [label="Id : ord"]
+	node87 -> node88
+	node89 [label=Args]
+	node87 -> node89
+	node90 [label="Char : 0"]
+	node89 -> node90
+	node91 [label="BinOp : mod"]
+	node86 -> node91
+	node92 [label=FuncProcCall]
+	node91 -> node92
+	node93 [label="Id : ord"]
+	node92 -> node93
+	node94 [label=Args]
+	node92 -> node94
+	node95 [label="Id : s"]
+	node94 -> node95
+	node96 [label="Int : 10"]
+	node91 -> node96
+	node97 [label=Variables]
+	node74 -> node97
+	node98 [label=Variables]
+	node1 -> node98
+	node99 [label=Decl]
+	node98 -> node99
+	node100 [label="TypeString : string"]
+	node99 -> node100
+	node101 [label="Id : s"]
+	node99 -> node101
+	node102 [label=Decl]
+	node98 -> node102
+	node103 [label="TypeString : string"]
+	node102 -> node103
+	node104 [label="Id : t"]
+	node102 -> node104
+	node105 [label=Decl]
+	node98 -> node105
+	node106 [label="Type : char"]
+	node105 -> node106
+	node107 [label="Id : ascii"]
+	node105 -> node107
+	node108 [label=Decl]
+	node98 -> node108
+	node109 [label="Type : char"]
+	node108 -> node109
+	node110 [label="Id : tmp"]
+	node108 -> node110
+	node111 [label=Decl]
+	node98 -> node111
+	node112 [label="Type : integer"]
+	node111 -> node112
+	node113 [label="Id : i"]
+	node111 -> node113
+	node114 [label=Decl]
+	node98 -> node114
+	node115 [label="Type : integer"]
+	node114 -> node115
+	node116 [label="Id : j"]
+	node114 -> node116
+	node117 [label=Decl]
+	node98 -> node117
+	node118 [label="Type : integer"]
+	node117 -> node118
+	node119 [label="Id : len"]
+	node117 -> node119
+	node120 [label=Block]
+	node1 -> node120
+	node121 [label=FuncProcCall]
+	node120 -> node121
+	node122 [label="Id : readln"]
+	node121 -> node122
+	node123 [label=Args]
+	node121 -> node123
+	node124 [label="Id : s"]
+	node123 -> node124
+	node125 [label=Assign]
+	node120 -> node125
+	node126 [label="Id : i"]
+	node125 -> node126
+	node127 [label="Int : 1"]
+	node125 -> node127
+	node128 [label=Assign]
+	node120 -> node128
+	node129 [label="Id : j"]
+	node128 -> node129
+	node130 [label="Int : 1"]
+	node128 -> node130
+	node131 [label=Assign]
+	node120 -> node131
+	node132 [label="Id : len"]
+	node131 -> node132
+	node133 [label=FuncProcCall]
+	node131 -> node133
+	node134 [label="Id : length"]
+	node133 -> node134
+	node135 [label=Args]
+	node133 -> node135
+	node136 [label="Id : s"]
+	node135 -> node136
+	node137 [label=While]
+	node120 -> node137
+	node138 [label="BinOp : <="]
+	node137 -> node138
+	node139 [label="Id : i"]
+	node138 -> node139
+	node140 [label="Id : len"]
+	node138 -> node140
+	node141 [label=Block]
+	node137 -> node141
+	node142 [label=Assign]
+	node141 -> node142
+	node143 [label="Id : ascii"]
+	node142 -> node143
+	node144 [label=ArrayElem]
+	node142 -> node144
+	node145 [label="Id : s"]
+	node144 -> node145
+	node146 [label="Id : i"]
+	node144 -> node146
+	node147 [label=FuncProcCall]
+	node141 -> node147
+	node148 [label="Id : inc"]
+	node147 -> node148
+	node149 [label=Args]
+	node147 -> node149
+	node150 [label="Id : i"]
+	node149 -> node150
+	node151 [label=Assign]
+	node141 -> node151
+	node152 [label="Id : tmp"]
+	node151 -> node152
+	node153 [label=FuncProcCall]
+	node151 -> node153
+	node154 [label="Id : cifra_stotina"]
+	node153 -> node154
+	node155 [label=Args]
+	node153 -> node155
+	node156 [label="Id : ascii"]
+	node155 -> node156
+	node157 [label=If]
+	node141 -> node157
+	node158 [label="BinOp : and"]
+	node157 -> node158
+	node159 [label="BinOp : or"]
+	node158 -> node159
+	node160 [label="BinOp : <>"]
+	node159 -> node160
+	node161 [label="Id : tmp"]
+	node160 -> node161
+	node162 [label="Char : 0"]
+	node160 -> node162
+	node163 [label="BinOp : ="]
+	node159 -> node163
+	node164 [label="Id : tmp"]
+	node163 -> node164
+	node165 [label="Char : 0"]
+	node163 -> node165
+	node166 [label="BinOp : >"]
+	node158 -> node166
+	node167 [label="Id : j"]
+	node166 -> node167
+	node168 [label="Int : 1"]
+	node166 -> node168
+	node169 [label=Block]
+	node157 -> node169
+	node170 [label=FuncProcCall]
+	node169 -> node170
+	node171 [label="Id : insert"]
+	node170 -> node171
+	node172 [label=Args]
+	node170 -> node172
+	node173 [label="Id : tmp"]
+	node172 -> node173
+	node174 [label="Id : t"]
+	node172 -> node174
+	node175 [label="Id : j"]
+	node172 -> node175
+	node176 [label=FuncProcCall]
+	node169 -> node176
+	node177 [label="Id : inc"]
+	node176 -> node177
+	node178 [label=Args]
+	node176 -> node178
+	node179 [label="Id : j"]
+	node178 -> node179
+	node180 [label=FuncProcCall]
+	node141 -> node180
+	node181 [label="Id : insert"]
+	node180 -> node181
+	node182 [label=Args]
+	node180 -> node182
+	node183 [label=FuncProcCall]
+	node182 -> node183
+	node184 [label="Id : cifra_desetica"]
+	node183 -> node184
+	node185 [label=Args]
+	node183 -> node185
+	node186 [label="Id : ascii"]
+	node185 -> node186
+	node187 [label="Id : t"]
+	node182 -> node187
+	node188 [label="Id : j"]
+	node182 -> node188
+	node189 [label=FuncProcCall]
+	node141 -> node189
+	node190 [label="Id : inc"]
+	node189 -> node190
+	node191 [label=Args]
+	node189 -> node191
+	node192 [label="Id : j"]
+	node191 -> node192
+	node193 [label=FuncProcCall]
+	node141 -> node193
+	node194 [label="Id : insert"]
+	node193 -> node194
+	node195 [label=Args]
+	node193 -> node195
+	node196 [label=FuncProcCall]
+	node195 -> node196
+	node197 [label="Id : cifra_jedinica"]
+	node196 -> node197
+	node198 [label=Args]
+	node196 -> node198
+	node199 [label="Id : ascii"]
+	node198 -> node199
+	node200 [label="Id : t"]
+	node195 -> node200
+	node201 [label="Id : j"]
+	node195 -> node201
+	node202 [label=FuncProcCall]
+	node141 -> node202
+	node203 [label="Id : inc"]
+	node202 -> node203
+	node204 [label=Args]
+	node202 -> node204
+	node205 [label="Id : j"]
+	node204 -> node205
+	node206 [label=FuncProcCall]
+	node120 -> node206
+	node207 [label="Id : write"]
+	node206 -> node207
+	node208 [label=Args]
+	node206 -> node208
+	node209 [label="Id : t"]
+	node208 -> node209
 }
